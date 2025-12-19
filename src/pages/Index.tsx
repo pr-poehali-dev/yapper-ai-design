@@ -90,6 +90,12 @@ const Index = () => {
     }
   };
 
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [messages, isTyping]);
+
   const SidebarContent = () => (
     <div className="h-full flex flex-col bg-sidebar">
       <div className="p-4 border-b border-sidebar-border">
@@ -339,7 +345,7 @@ const Index = () => {
                 </div>
                 <Button
                   onClick={handleSend}
-                  disabled={!inputValue.trim()}
+                  disabled={!inputValue.trim() || isTyping}
                   size="icon"
                   className="h-12 w-12 flex-shrink-0"
                 >
@@ -347,7 +353,7 @@ const Index = () => {
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground text-center mt-3">
-                YAPPERTAR-ai может ошибаться. Проверяйте важную информацию.
+                {isTyping ? 'Яппер печатает...' : 'YAPPERTAR-ai может ошибаться. Проверяйте важную информацию.'}
               </p>
             </div>
           </div>
